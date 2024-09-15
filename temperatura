@@ -1,0 +1,42 @@
+# Función para calcular el promedio de temperaturas
+def calcular_promedio_temperaturas(temperaturas, ciudades, semanas):
+    """
+    Calcula el promedio de temperatura para cada ciudad durante varias semanas.
+    
+    Parámetros:
+    - temperaturas: Lista 3D de temperaturas donde [ciudad][día][semana] almacena una temperatura específica.
+    - ciudades: Número de ciudades (dimensión de la matriz).
+    - semanas: Número de semanas (dimensión de la matriz).
+    
+    Retorna:
+    - Un diccionario con el promedio de temperatura para cada ciudad.
+    """
+    
+    promedios = {}
+
+    for ciudad in range(ciudades):
+        for semana in range(semanas):
+            suma = 0
+            for dia in range(7):  # Asumimos que hay 7 días por semana
+                suma += temperaturas[ciudad][dia][semana]
+            promedio = suma / 7  # Promedio semanal
+            ciudad_nombre = f"Ciudad {ciudad + 1}"
+            if ciudad_nombre not in promedios:
+                promedios[ciudad_nombre] = []
+            promedios[ciudad_nombre].append(promedio)
+
+    return promedios
+
+# Ejemplo de uso con datos de ejemplo (3 ciudades, 7 días, 4 semanas)
+import numpy as np
+
+temperaturas = np.random.randint(10, 35, size=(3, 7, 4))  # Genera temperaturas aleatorias entre 10 y 35 para 3 ciudades y 4 semanas
+
+promedios = calcular_promedio_temperaturas(temperaturas, 3, 4)
+
+# Mostrar los resultados
+for ciudad, lista_promedios in promedios.items():
+    for semana, promedio in enumerate(lista_promedios, start=1):
+        print(f"{ciudad}, Semana {semana}: Promedio de temperatura = {promedio:.2f}°C")
+
+
